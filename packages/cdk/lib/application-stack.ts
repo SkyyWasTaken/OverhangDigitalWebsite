@@ -20,7 +20,7 @@ export class ApplicationStack extends Stack {
     const isProd = props.env?.account === ACCOUNTS.prod
     const domainName = isProd ? PROD_ZONE_NAME : `${stageName.toLowerCase()}.${PROD_ZONE_NAME}`
     const route_53 = new Route53Construct(this, 'Route53Construct', stageName, isProd, domainName)
-    const site_infra = new SiteInfrastructureConstruct(this, 'SiteInfrastructureConstruct', route_53.certificate, domainName)
+    const site_infra = new SiteInfrastructureConstruct(this, 'SiteInfrastructureConstruct', domainName, route_53.certificate)
     route_53.register_cloudfront_target(site_infra.cloudfrontTarget)
   }
 }
@@ -28,7 +28,7 @@ export class ApplicationStack extends Stack {
 class SiteInfrastructureConstruct extends Construct {
   public readonly cloudfrontTarget: CloudFrontTarget;
 
-  constructor(scope: Construct, id: string, certificate: Certificate, domainName: string) {
+  constructor(scope: Construct, id: string, domainName: string, certificate?: Certificate) {
     super(scope, id);
 
     // Create the bucket
@@ -99,7 +99,7 @@ class SiteInfrastructureConstruct extends Construct {
 
 class Route53Construct extends Construct {
   private readonly hostedZone: PublicHostedZone;
-  public readonly certificate: Certificate;
+  public readonly certificate: Certificate | undefined;
 
   constructor(scope: Construct, id: string, stageName: string, isProd: boolean, domainName: string) {
     super(scope, id);
@@ -109,10 +109,14 @@ class Route53Construct extends Construct {
       caaAmazon: true,
     })
 
-    this.certificate = new Certificate(this, 'OverhangCertificate', {
-      domainName: domainName,
-      validation: CertificateValidation.fromDns(this.hostedZone)
-    })
+    if (!isProd && !DOMAIN_DELEGATED) {
+      this.certificate = new Certificate(this, 'OverhangCertificate', {
+        domainName: domainName,
+        validation: CertificateValidation.fromDns(this.hostedZone)
+      })
+    } else {
+      this.certificate = undefined;
+    }
 
     // Delegate to the beta stage
     const roleName = 'OverhangDelegationRole'
