@@ -48,3 +48,7 @@ export default tseslint.config({
   },
 })
 ```
+
+# CSS
+We use shadcn/ui as a base for our UI components.
+[shadcn/ui docs](https://ui.shadcn.com/docs)
