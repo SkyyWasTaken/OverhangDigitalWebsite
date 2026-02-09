@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import * as cdk from 'aws-cdk-lib';
-import {DoggersDogPipelineStack} from "../lib/pipeline-stack";
-import {ACCOUNTS, PIPELINE_ACCOUNT, PIPELINE_REGION, REGION} from "../lib/constants";
-import {ApplicationStage} from "../lib/application-stage";
+import {DoggersDogPipelineStack} from "./pipeline-stack";
+import {ACCOUNTS, PIPELINE_ACCOUNT, PIPELINE_REGION, REGION} from "./constants";
+import {ApplicationStage} from "./application-stage";
 
 const app = new cdk.App();
 
