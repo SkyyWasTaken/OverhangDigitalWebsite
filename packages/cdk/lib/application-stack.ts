@@ -109,7 +109,7 @@ class Route53Construct extends Construct {
       caaAmazon: true,
     })
 
-    if (!isProd && !DOMAIN_DELEGATED) {
+    if (isProd || DOMAIN_DELEGATED) {
       this.certificate = new Certificate(this, 'OverhangCertificate', {
         domainName: domainName,
         validation: CertificateValidation.fromDns(this.hostedZone)
