@@ -4,7 +4,7 @@ import {CodePipeline, CodePipelineSource, ShellStep} from 'aws-cdk-lib/pipelines
 import {Secret} from "aws-cdk-lib/aws-secretsmanager";
 import {BuildSpec} from "aws-cdk-lib/aws-codebuild";
 
-export class DoggersDogPipelineStack extends cdk.Stack {
+export class OverhangPipelineStack extends cdk.Stack {
   readonly pipeline: CodePipeline;
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -15,10 +15,10 @@ export class DoggersDogPipelineStack extends cdk.Stack {
     })
 
     this.pipeline = new CodePipeline(this, 'Pipeline', {
-      pipelineName: 'DoggersDogPipeline',
+      pipelineName: 'OverhangPipeline',
       crossAccountKeys: true,
       synth: new ShellStep('Synth', {
-        input: CodePipelineSource.gitHub('SkyyWasTaken/doggersdog-website', 'main'),
+        input: CodePipelineSource.gitHub('SkyyWasTaken/OverhangDigitalWebsite', 'main'),
         commands: ['npm ci', 'npm run build']
       }),
       synthCodeBuildDefaults: {

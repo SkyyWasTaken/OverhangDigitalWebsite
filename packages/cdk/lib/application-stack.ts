@@ -104,18 +104,18 @@ class Route53Construct extends Construct {
   constructor(scope: Construct, id: string, stageName: string, isProd: boolean, domainName: string) {
     super(scope, id);
 
-    this.hostedZone = new PublicHostedZone(this, 'DoggersDogHostedZone', {
+    this.hostedZone = new PublicHostedZone(this, 'OverhangHostedZone', {
       zoneName: domainName,
       caaAmazon: true,
     })
 
-    this.certificate = new Certificate(this, 'DoggersDogCertificate', {
+    this.certificate = new Certificate(this, 'OverhangCertificate', {
       domainName: domainName,
       validation: CertificateValidation.fromDns(this.hostedZone)
     })
 
     // Delegate to the beta stage
-    const roleName = 'DoggersDogDelegationRole'
+    const roleName = 'OverhangDelegationRole'
     if (isProd) {
       this.createDelegation(roleName)
     } else if (DOMAIN_DELEGATED) {
@@ -154,7 +154,7 @@ class Route53Construct extends Construct {
       account: ACCOUNTS.prod,
       resourceName: roleName,
     })
-    const delegationRole = Role.fromRoleArn(this, `DoggersDogHostedZoneDelegationRole`, roleArn)
+    const delegationRole = Role.fromRoleArn(this, `OverhangHostedZoneDelegationRole`, roleArn)
     new CrossAccountZoneDelegationRecord(this, `${this.hostedZone.zoneName}Record`, {
       delegationRole: delegationRole,
       delegatedZone: this.hostedZone,
