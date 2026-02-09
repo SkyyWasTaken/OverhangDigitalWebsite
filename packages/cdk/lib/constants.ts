@@ -15,6 +15,6 @@ export const PROD_ZONE_NAME = "overhangdigital.com";
 
 export const CLOUDFRONT_VERIFIED = false;
 
-export const DOMAIN_DELEGATED = false;
+export const DOMAIN_DELEGATED = true;
 
 export const GITHUB_CREDENTIAL_ENTERED = true;

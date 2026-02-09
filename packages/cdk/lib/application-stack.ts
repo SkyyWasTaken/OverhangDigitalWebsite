@@ -21,7 +21,7 @@ export class ApplicationStack extends Stack {
     const isProd = props.env?.account === ACCOUNTS.prod
     const domainName = isProd ? PROD_ZONE_NAME : `${stageName.toLowerCase()}.${PROD_ZONE_NAME}`
     const route_53 = new Route53Construct(this, 'Route53Construct', stageName, isProd, domainName)
-    const site_infra = new SiteInfrastructureConstruct(this, 'SiteInfrastructureConstruct', domainName, route_53.certificate)
+    const site_infra = new SiteInfrastructureConstruct(this, 'SiteInfrastructureConstruct', domainName, route_53.certificate, isProd)
     if (site_infra.cloudfrontTarget) {
       route_53.register_cloudfront_target(site_infra.cloudfrontTarget)
     }
@@ -31,7 +31,7 @@ export class ApplicationStack extends Stack {
 class SiteInfrastructureConstruct extends Construct {
   public readonly cloudfrontTarget: CloudFrontTarget | undefined;
 
-  constructor(scope: Construct, id: string, domainName: string, certificate?: Certificate) {
+  constructor(scope: Construct, id: string, domainName: string, certificate?: Certificate, isProd?: boolean) {
     super(scope, id);
 
     // Create the bucket
@@ -79,7 +79,7 @@ class SiteInfrastructureConstruct extends Construct {
       }
 
     })
-    if (certificate && CLOUDFRONT_VERIFIED) {
+    if (certificate && (CLOUDFRONT_VERIFIED || !isProd)) {
       const cloudfrontDistribution = new Distribution(this, "websiteDistribution", {
         defaultBehavior: {
           origin: S3BucketOrigin.withOriginAccessControl(assetBucket),
