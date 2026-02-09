@@ -1,6 +1,4 @@
 # Main directory
-**/node_modules
-**/.idea
 website
 
 # CDK
@@ -13,4 +11,30 @@ packages/cdk/*.d.ts
 # API
 packages/api/**/*.js
 packages/api/**/*.d.ts
-node_modules
+
+**/node_modules
+
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

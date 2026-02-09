@@ -89,7 +89,7 @@ class SiteInfrastructureConstruct extends Construct {
     const deployment = new BucketDeployment(this, "WebsiteDeploymentBucketV2", {
       destinationBucket: assetBucket,
       // distribution: cloudfrontDistribution,
-      sources: [Source.asset("../../website", {})],
+      sources: [Source.asset("../../build/website", {})],
       distribution: cloudfrontDistribution,
       distributionPaths: ["/*"],
     })

@@ -15,6 +15,6 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: '../../website/'
+    outDir: '../../build/website/'
   }
 })

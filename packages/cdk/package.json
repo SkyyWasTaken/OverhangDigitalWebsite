@@ -5,9 +5,9 @@
     "cdk": "bin/cdk.js"
   },
   "scripts": {
-    "build": "tsc && cdk synthesize -o ../../cdk.out/",
+    "build": "tsc && cdk synthesize -o ../../build/cdk.out/",
     "watch": "tsc -w",
-    "cdk": "cdk"
+    "cdk": "cdk -o ../../build/cdk.out/"
   },
   "devDependencies": {
     "@types/node": "24.3.0",

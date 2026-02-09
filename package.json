@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "get-beta-creds": "aws sts get-caller-identity --profile FullAdmin-805673386085",
+    "get-prod-creds": "aws sts get-caller-identity --profile FullAdmin-903070443001",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "mkdir -p build && npm run build --ws",
     "lint": "npm run lint --ws",
