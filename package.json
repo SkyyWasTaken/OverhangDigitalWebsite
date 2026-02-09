@@ -6,9 +6,11 @@
     "get-beta-creds": "aws sts get-caller-identity --profile FullAdmin-805673386085",
     "get-prod-creds": "aws sts get-caller-identity --profile FullAdmin-903070443001",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "mkdir build && npm run build --ws",
+    "build": "mkdir -p build && npm run build --ws",
     "lint": "npm run lint --ws",
     "dev": "npm run dev -w packages/website",
+    "beta-cdk": "export AWS_PROFILE=FullAdmin-805673386085 && npm run cdk",
+    "prod-cdk": "export AWS_PROFILE=FullAdmin-903070443001 && npm run cdk",
     "cdk": "npm run cdk -w packages/cdk",
     "start": "cd ./packages/website && vite",
     "clean": "rm -rf ./node_modules && rm -rf ./cdk.out && rm -rf ./website"
