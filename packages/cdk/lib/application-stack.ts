@@ -175,7 +175,7 @@ class Route53Construct extends Construct {
   private createProdRecords() {
     new TxtRecord(this, "ProtonTxtRecord", {
       values: [PROTON_TXT_RECORD],
-      recordName: "@",
+      recordName: "",
       zone: this.hostedZone
     })
   }
