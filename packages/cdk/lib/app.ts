@@ -14,7 +14,7 @@ const pipelineStack = new OverhangPipelineStack(app, 'OverhangPipelineStack', {
 });
 
 // Add beta
-pipelineStack.pipeline.addStage(new ApplicationStage(app, {
+pipelineStack.pipeline?.addStage(new ApplicationStage(app, {
     env: {
         account: ACCOUNTS.beta,
         region: REGION
@@ -22,7 +22,7 @@ pipelineStack.pipeline.addStage(new ApplicationStage(app, {
 }, 'Beta'))
 
 // Add prod
-pipelineStack.pipeline.addStage(new ApplicationStage(app, {
+pipelineStack.pipeline?.addStage(new ApplicationStage(app, {
     env: {
         account: ACCOUNTS.prod,
         region: REGION
