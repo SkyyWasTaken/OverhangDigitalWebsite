@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "@overhang/api",
   "version": "0.1.0",
   "scripts": {
     "build": "tsc && esbuild ./src/index.js --bundle --outfile=./dist/index.js --platform=node",
