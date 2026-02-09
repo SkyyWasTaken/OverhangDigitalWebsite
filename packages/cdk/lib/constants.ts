@@ -9,6 +9,8 @@ export const PIPELINE_REGION = "us-east-1";
 
 export const REGION = "us-east-1";
 
+export const PROTON_TXT_RECORD = "protonmail-verification=052ac20814248363ca972697dac451e07bfde02a";
+
 export const PROD_ZONE_NAME = "overhangdigital.com";
 
 export const DOMAIN_DELEGATED = false;

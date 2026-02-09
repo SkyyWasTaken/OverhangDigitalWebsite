@@ -2,8 +2,9 @@ import {aws_route53, Duration, RemovalPolicy, Stack, StackProps} from "aws-cdk-l
 import {
   CrossAccountZoneDelegationRecord,
   PublicHostedZone,
+  TxtRecord,
 } from "aws-cdk-lib/aws-route53";
-import {ACCOUNTS, DOMAIN_DELEGATED, PROD_ZONE_NAME} from "./constants";
+import {ACCOUNTS, DOMAIN_DELEGATED, PROD_ZONE_NAME, PROTON_TXT_RECORD} from "./constants";
 import {AccountPrincipal, PolicyDocument, PolicyStatement, Role} from "aws-cdk-lib/aws-iam";
 import {Construct} from "constructs";
 import {Bucket, BucketEncryption} from "aws-cdk-lib/aws-s3";
@@ -121,9 +122,10 @@ class Route53Construct extends Construct {
     // Delegate to the beta stage
     const roleName = 'OverhangDelegationRole'
     if (isProd) {
-      this.createDelegation(roleName)
+      this.createDelegation(roleName);
+      this.createProdRecords();
     } else if (DOMAIN_DELEGATED) {
-      this.registerDelegationRecord(this, roleName)
+      this.registerDelegationRecord(this, roleName);
     }
   }
 
@@ -163,6 +165,14 @@ class Route53Construct extends Construct {
       delegationRole: delegationRole,
       delegatedZone: this.hostedZone,
       parentHostedZoneName: PROD_ZONE_NAME,
+    })
+  }
+
+  private createProdRecords() {
+    new TxtRecord(this, "ProtonTxtRecord", {
+      values: [PROTON_TXT_RECORD],
+      recordName: "@",
+      zone: this.hostedZone
     })
   }
 
