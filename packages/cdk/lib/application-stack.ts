@@ -22,12 +22,14 @@ export class ApplicationStack extends Stack {
     const domainName = isProd ? PROD_ZONE_NAME : `${stageName.toLowerCase()}.${PROD_ZONE_NAME}`
     const route_53 = new Route53Construct(this, 'Route53Construct', stageName, isProd, domainName)
     const site_infra = new SiteInfrastructureConstruct(this, 'SiteInfrastructureConstruct', domainName, route_53.certificate)
-    route_53.register_cloudfront_target(site_infra.cloudfrontTarget)
+    if (site_infra.cloudfrontTarget) {
+      route_53.register_cloudfront_target(site_infra.cloudfrontTarget)
+    }
   }
 }
 
 class SiteInfrastructureConstruct extends Construct {
-  public readonly cloudfrontTarget: CloudFrontTarget;
+  public readonly cloudfrontTarget: CloudFrontTarget | undefined;
 
   constructor(scope: Construct, id: string, domainName: string, certificate?: Certificate) {
     super(scope, id);
