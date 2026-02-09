@@ -77,24 +77,26 @@ class SiteInfrastructureConstruct extends Construct {
       }
 
     })
-    const cloudfrontDistribution = new Distribution(this, "websiteDistribution", {
-      defaultBehavior: {
-        origin: S3BucketOrigin.withOriginAccessControl(assetBucket),
-        allowedMethods: AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
-      },
-      defaultRootObject: "index.html",
-      domainNames: [domainName],
-      certificate: certificate,
-      webAclId: webAccessControlList.attrArn,
-    })
-    const deployment = new BucketDeployment(this, "WebsiteDeploymentBucketV2", {
-      destinationBucket: assetBucket,
-      // distribution: cloudfrontDistribution,
-      sources: [Source.asset("../../build/website", {})],
-      distribution: cloudfrontDistribution,
-      distributionPaths: ["/*"],
-    })
-    this.cloudfrontTarget = new CloudFrontTarget(cloudfrontDistribution)
+    if (certificate) {
+      const cloudfrontDistribution = new Distribution(this, "websiteDistribution", {
+        defaultBehavior: {
+          origin: S3BucketOrigin.withOriginAccessControl(assetBucket),
+          allowedMethods: AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
+        },
+        defaultRootObject: "index.html",
+        domainNames: [domainName],
+        certificate: certificate,
+        webAclId: webAccessControlList.attrArn,
+      })
+      new BucketDeployment(this, "WebsiteDeploymentBucketV2", {
+        destinationBucket: assetBucket,
+        // distribution: cloudfrontDistribution,
+        sources: [Source.asset("../../build/website", {})],
+        distribution: cloudfrontDistribution,
+        distributionPaths: ["/*"],
+      })
+      this.cloudfrontTarget = new CloudFrontTarget(cloudfrontDistribution)
+    }
   }
 }
 
