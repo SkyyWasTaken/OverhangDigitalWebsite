@@ -19,7 +19,8 @@ export class OverhangPipelineStack extends cdk.Stack {
       crossAccountKeys: true,
       synth: new ShellStep('Synth', {
         input: CodePipelineSource.gitHub('SkyyWasTaken/OverhangDigitalWebsite', 'main'),
-        commands: ['npm ci', 'npm run build']
+        commands: ['npm ci', 'npm run build'],
+        primaryOutputDirectory: "build"
       }),
       synthCodeBuildDefaults: {
         partialBuildSpec: BuildSpec.fromObject({
