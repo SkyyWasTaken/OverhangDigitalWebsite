@@ -1,0 +1,22 @@
+{
+  "name": "doggersdogwebsite",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build --ws",
+    "lint": "npm run lint --ws",
+    "dev": "npm run dev -w packages/website",
+    "cdk": "npm run cdk -w packages/cdk"
+  },
+  "workspaces": [
+    "./packages/website", "./packages/api", "./packages/cdk"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "web-vitals": "^5.1.0"
+  }
+}
