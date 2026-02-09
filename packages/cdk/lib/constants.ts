@@ -13,6 +13,8 @@ export const PROTON_TXT_RECORD = "protonmail-verification=052ac20814248363ca9726
 
 export const PROD_ZONE_NAME = "overhangdigital.com";
 
+export const CLOUDFRONT_VERIFIED = false;
+
 export const DOMAIN_DELEGATED = false;
 
 export const GITHUB_CREDENTIAL_ENTERED = true;

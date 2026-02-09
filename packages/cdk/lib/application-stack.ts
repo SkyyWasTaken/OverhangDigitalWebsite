@@ -4,7 +4,7 @@ import {
   PublicHostedZone,
   TxtRecord,
 } from "aws-cdk-lib/aws-route53";
-import {ACCOUNTS, DOMAIN_DELEGATED, PROD_ZONE_NAME, PROTON_TXT_RECORD} from "./constants";
+import {ACCOUNTS, CLOUDFRONT_VERIFIED, DOMAIN_DELEGATED, PROD_ZONE_NAME, PROTON_TXT_RECORD} from "./constants";
 import {AccountPrincipal, PolicyDocument, PolicyStatement, Role} from "aws-cdk-lib/aws-iam";
 import {Construct} from "constructs";
 import {Bucket, BucketEncryption} from "aws-cdk-lib/aws-s3";
@@ -79,7 +79,7 @@ class SiteInfrastructureConstruct extends Construct {
       }
 
     })
-    if (certificate) {
+    if (certificate && CLOUDFRONT_VERIFIED) {
       const cloudfrontDistribution = new Distribution(this, "websiteDistribution", {
         defaultBehavior: {
           origin: S3BucketOrigin.withOriginAccessControl(assetBucket),
