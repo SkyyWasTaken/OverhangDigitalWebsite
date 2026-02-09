@@ -22,14 +22,14 @@ export class OverhangPipelineStack extends cdk.Stack {
         synth: new ShellStep('Synth', {
           input: CodePipelineSource.gitHub('SkyyWasTaken/OverhangDigitalWebsite', 'main'),
           commands: ['npm ci', 'npm run build'],
-          primaryOutputDirectory: "build"
+          primaryOutputDirectory: "build/cdk.out"
         }),
         synthCodeBuildDefaults: {
           partialBuildSpec: BuildSpec.fromObject({
             phases: {
               install: {
                 "runtime-versions": {
-                  "nodejs": 22
+                  "nodejs": 24
                 }
               }
             }
