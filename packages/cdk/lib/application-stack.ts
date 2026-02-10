@@ -1,10 +1,12 @@
 import {aws_route53, Duration, RemovalPolicy, Stack, StackProps} from "aws-cdk-lib";
 import {
+  CnameRecord,
   CrossAccountZoneDelegationRecord,
+  MxRecord,
   PublicHostedZone,
   TxtRecord,
 } from "aws-cdk-lib/aws-route53";
-import {ACCOUNTS, CLOUDFRONT_VERIFIED, DOMAIN_DELEGATED, PROD_ZONE_NAME, PROTON_TXT_RECORD} from "./constants";
+import {ACCOUNTS, CLOUDFRONT_VERIFIED, DKIM_RECORD_ENTRIES, DOMAIN_DELEGATED, PROD_ZONE_NAME, PROTON_TXT_RECORD, ROOT_MX_RECORDS} from "./constants";
 import {AccountPrincipal, PolicyDocument, PolicyStatement, Role} from "aws-cdk-lib/aws-iam";
 import {Construct} from "constructs";
 import {Bucket, BucketEncryption} from "aws-cdk-lib/aws-s3";
@@ -178,10 +180,32 @@ class Route53Construct extends Construct {
   }
 
   private createProdRecords() {
-    new TxtRecord(this, "ProtonTxtRecord", {
+    new TxtRecord(this, "ProtonVerificationRecord", {
       values: [PROTON_TXT_RECORD],
-      recordName: "",
       zone: this.hostedZone
+    })
+
+    new TxtRecord(this, "ProtonSpfRecord", {
+      values: ["v=spf1 include:_spf.protonmail.ch ~all"],
+      zone: this.hostedZone
+    })
+
+    new MxRecord(this, `ProtonMxRecord`, {
+      values: ROOT_MX_RECORDS,
+      zone: this.hostedZone
+    })
+
+    for (const {id: entryId, ...entry} of DKIM_RECORD_ENTRIES ) {
+      new CnameRecord(this, entryId, {
+        zone: this.hostedZone,
+        ...entry
+      })
+    }
+    
+    new TxtRecord(this, "DmarcRecord", {
+      zone: this.hostedZone,
+      recordName: "_dmarc",
+      values: ["v=DMARC1; p=quarantine"]
     })
   }
 
