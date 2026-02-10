@@ -43,7 +43,7 @@ export const DKIM_RECORD_ENTRIES: DkimRecordEntry[] = [
   }
 ]
 
-export const CLOUDFRONT_VERIFIED = false;
+export const CLOUDFRONT_VERIFIED = true;
 
 export const DOMAIN_DELEGATED = true;
 
