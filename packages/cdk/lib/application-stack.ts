@@ -181,12 +181,7 @@ class Route53Construct extends Construct {
 
   private createProdRecords() {
     new TxtRecord(this, "ProtonVerificationRecord", {
-      values: [PROTON_TXT_RECORD],
-      zone: this.hostedZone
-    })
-
-    new TxtRecord(this, "ProtonSpfRecord", {
-      values: ["v=spf1 include:_spf.protonmail.ch ~all"],
+      values: [PROTON_TXT_RECORD, "v=spf1 include:_spf.protonmail.ch ~all"],
       zone: this.hostedZone
     })
 
