@@ -14,7 +14,6 @@ packages/api/**/*.d.ts
 
 **/node_modules
 
-
 # Logs
 logs
 *.log
@@ -24,9 +23,11 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Builds
 dist
 dist-ssr
 *.local
+*.tsbuildinfo
 
 # Editor directories and files
 .vscode/*
