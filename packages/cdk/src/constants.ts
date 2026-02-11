@@ -1,4 +1,4 @@
-import { MxRecordValue } from "aws-cdk-lib/aws-route53";
+import type { MxRecordValue } from "aws-cdk-lib/aws-route53";
 
 export const ACCOUNTS = {
     "beta": "805673386085",

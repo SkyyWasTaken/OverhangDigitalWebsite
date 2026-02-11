@@ -9,7 +9,7 @@ function App() {
       <div className="m-auto">
         <h1 className="text-3xl">skibidi ohio</h1>
         <div className="flex items-center flex-col">
-          <a href="https://ohio.gov" target="_blank">
+          <a href="https://ohio.gov" target="_blank" rel="noreferrer">
             <img src={reactLogo} className="h-6em p-1.5em will-change-filter animate-spin drop-shadow-md" alt="React logo" />
           </a>
         </div>

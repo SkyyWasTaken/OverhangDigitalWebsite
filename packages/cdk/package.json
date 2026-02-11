@@ -4,8 +4,9 @@
   "bin": {
     "cdk": "bin/cdk.js"
   },
+  "type": "module",
   "scripts": {
-    "build": "tsc && cdk synthesize -o ../../build/cdk.out/",
+    "build": "tsc --noEmit && cdk synthesize -o ../../build/cdk.out/",
     "watch": "tsc -w",
     "cdk": "cdk -o ../../build/cdk.out/"
   },
@@ -13,6 +14,7 @@
     "@types/node": "24.3.0",
     "aws-cdk": "^2.1026.0",
     "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "~5.9.2"
   },
   "dependencies": {

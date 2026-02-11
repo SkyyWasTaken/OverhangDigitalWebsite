@@ -1,4 +1,4 @@
-import {aws_route53, Duration, RemovalPolicy, Stack, StackProps} from "aws-cdk-lib";
+import {aws_route53, Duration, RemovalPolicy, Stack, type StackProps} from "aws-cdk-lib";
 import {
   CnameRecord,
   CrossAccountZoneDelegationRecord,
