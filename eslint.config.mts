@@ -9,7 +9,7 @@ export default defineConfig([
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   { 
-    ignores: ["**/build/**", "**/node_modules/"],
+    ignores: ["**/build/**", "**/node_modules/", "**/dist/"],
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"], 
     plugins: { js, pluginReact,  }, 
     languageOptions: { 

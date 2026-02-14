@@ -8,7 +8,8 @@
   "scripts": {
     "build": "tsc --noEmit && cdk synthesize -o ../../build/cdk.out/",
     "watch": "tsc -w",
-    "cdk": "cdk -o ../../build/cdk.out/"
+    "cdk": "cdk -o ../../build/cdk.out/",
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@types/node": "24.3.0",

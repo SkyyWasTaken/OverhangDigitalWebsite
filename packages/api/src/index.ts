@@ -1,4 +1,4 @@
-import {ALBEvent, ALBHandler, ALBResult, Callback, Context} from "aws-lambda";
+import {ALBEvent, ALBResult, Callback, Context} from "aws-lambda";
 import process from "node:process";
 import * as S3 from '@aws-sdk/client-s3'
 
