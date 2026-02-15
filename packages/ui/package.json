@@ -1,8 +1,6 @@
 {
-  "name": "@overhang/website",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "name": "@overhang/ui",
+  "version": "1.0.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build --emptyOutDir",

@@ -11,6 +11,19 @@
     "cdk": "cdk -o ../../build/cdk.out/",
     "lint": "eslint ."
   },
+  "nx": {
+    "targets": {
+      "build": {
+        "dependsOn": [
+          "^build",
+          {
+            "projects": "@overhang/ui",
+            "target": "build"
+          }
+        ]
+      }
+    }
+  },
   "devDependencies": {
     "@types/node": "24.3.0",
     "aws-cdk": "^2.1026.0",
