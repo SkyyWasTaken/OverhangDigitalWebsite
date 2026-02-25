@@ -15,7 +15,7 @@ import {AllowedMethods, Distribution,} from "aws-cdk-lib/aws-cloudfront";
 import {Certificate, CertificateValidation} from "aws-cdk-lib/aws-certificatemanager";
 import {S3BucketOrigin} from "aws-cdk-lib/aws-cloudfront-origins";
 import {CloudFrontTarget} from "aws-cdk-lib/aws-route53-targets";
-import {BucketDeployment, Source} from "aws-cdk-lib/aws-s3-deployment";
+import {BucketDeployment, CacheControl, Source} from "aws-cdk-lib/aws-s3-deployment";
 
 export class ApplicationStack extends Stack {
   constructor(scope: Construct, id: string, props: StackProps, stageName: string) {
@@ -92,12 +92,27 @@ class SiteInfrastructureConstruct extends Construct {
         certificate: certificate,
         webAclId: webAccessControlList.attrArn,
       })
+      // Upload assets with cache enabled (Vite adds a hash, which will invalidate.)
+      new BucketDeployment(this, "WebsiteAssetBucketDeployment", {
+        destinationBucket: assetBucket,
+        sources: [Source.asset("../../build/website", {
+          exclude: ["index.html"]
+        })],
+        cacheControl: [
+          CacheControl.setPublic(),
+          CacheControl.maxAge(Duration.days(365)),
+          CacheControl.immutable()
+        ]
+      });
+      // Upload index.html and force browsers to fetch it fresh every time
       new BucketDeployment(this, "WebsiteDeploymentBucketV2", {
         destinationBucket: assetBucket,
-        // distribution: cloudfrontDistribution,
-        sources: [Source.asset("../../build/website", {})],
+        sources: [Source.asset("../../build/website", {
+          exclude: ["*", "!index.html"]
+        })],
         distribution: cloudfrontDistribution,
-        distributionPaths: ["/*"],
+        distributionPaths: ["/", "/index.html"],
+        cacheControl: [CacheControl.noCache(), CacheControl.setPublic(), CacheControl.mustRevalidate()]
       })
       this.cloudfrontTarget = new CloudFrontTarget(cloudfrontDistribution)
     }
